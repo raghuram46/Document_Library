@@ -1,0 +1,94 @@
+******************************Service*******************
+
+	// Command to create a service.
+	ng g s services/book
+
+***************************book.service.ts*****************
+
+
+    getBooks(){
+    
+    return  [
+    {
+      name: "Think and Grow Rich",
+	publisher: "First Print",
+      price: 359
+    },
+    {
+      name: "Acers of Diamond",
+	publisher: "Diamond",
+      price: 200
+    },
+    {
+      name: "Atomic Habits",
+	publisher: "Penguine",
+      price: 587
+    },
+    {
+      name: "Power of Habit",
+	publisher: "Penguine",
+      price: 650
+    },
+    {
+      name: "Option B",
+	publisher: "Garuda",
+      price: 350
+    }
+  ];
+
+  }
+
+
+******************************BookListComponent.ts****************
+
+	
+  public books : any = [];
+
+
+  constructor(private bookService : BookService) { }
+
+  
+  ngOnInit() {
+
+    this.books = this.bookService.getBooks();
+
+  }
+
+
+***************************BookListComponent.html********************
+
+
+  <h1> Book List</h1>
+
+
+<ul>
+  <li *ngFor = "let book of books">
+    {{ book.name }}
+  </li>
+</ul>
+
+
+
+****************************BookDetailComponent.ts*******************
+
+
+	public books : any = [];
+
+  constructor(private bookService: BookService) { }
+
+  ngOnInit() {
+
+    this.books = this.bookService.getBooks();
+  }
+
+
+***********************************BookDetailComponent.html*****************
+
+
+  <h1> Book Details </h1>
+
+<ul>
+  <li *ngFor = "let book of books">
+    {{ book.name }} - {{ book.publisher }} - {{ book.price }}
+  </li>
+</ul>

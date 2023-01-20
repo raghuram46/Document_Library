@@ -1,0 +1,59 @@
+
+<h1 class="heading">NgFor</h1>
+<ul>
+    <li *ngFor = "let book of books; let i=index" [ngStyle]="i%2==0 ? {'color':'red'} : {'color':'blue'}">
+        {{i+1}} - {{book.name}}
+    </li>
+</ul>
+
+<h1>GIT</h1>
+
+
+<h1 class="heading">NgFor Nested</h1>
+<ul *ngFor="let group of bookByPublisher">
+    <li>{{group.publisher}}</li>
+    <ul>
+        <li *ngFor = "let book of group.books; let i=index" [ngStyle]="i%2==0 ? {'color':'red'} : {'color':'blue'}">
+            {{i+1}} - {{book.name}}
+        </li>
+    </ul>
+</ul>
+
+<h1 class="heading">Ngif</h1>
+<ul *ngFor="let book of books">
+    <li *ngIf="book.price > 500; else elseBlock">
+        {{book.name}} 
+    </li>
+</ul>
+
+<!-- <ng-template #thenBlock>this book price is greater than 500</ng-template> -->
+
+<ng-template #elseBlock>Cheaper Book</ng-template>
+
+
+<h1 class="heading">NgSwitch</h1>
+<ul *ngFor="let book of books" [ngSwitch]="book.publisher">
+    <li *ngSwitchCase="'Penguine'" class="text-success">{{book.name}} - {{book.price}}</li>
+    <li *ngSwitchCase="'First Print'" class="text-primary">{{book.name}} - {{book.price}}</li>
+    <li *ngSwitchCase="'Diamond'" class="text-danger">{{book.name}} - {{book.price}}</li>
+    <li *ngSwitchDefault class="text-warning">{{book.name}} - {{book.price}}</li>
+</ul>
+
+<h1 class="heading">NgStyle</h1>
+<ul *ngFor="let book of books">
+    <li [ngStyle]="{'color': getColor(book.publisher)}">{{book.name}}</li>
+</ul>
+
+
+<h4>NgClass</h4>
+<ul *ngFor="let book of books">
+  <li [ngClass]="{
+    'text-success':book.publisher === 'Penguine',
+    'text-primary':book.publisher === 'Garuda',
+    'text-danger':book.publisher === 'Diamond',
+    'text-warning':book.publisher === 'First Print'
+
+  }">
+	{{ book.name }} ({{ book.price }})
+  </li>
+</ul>

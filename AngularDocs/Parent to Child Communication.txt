@@ -1,0 +1,79 @@
+**********Parent to Child Communication using @Input() decorator**********
+
+
+## Parent (app.component.ts)
+
+
+   public bookName: string = '';
+   public publisher: string = '';
+
+
+### Parent tempalate (app.component.html)
+
+
+   <p>
+	<input type = "text" [(ngModel)] ="bookName" placeholder="Book Name Please">
+
+	<input type = "text" [(ngModel)] ="publisher" placeholder="Publisher Name">
+  </p>
+
+	<p>
+		<child1 parentsBookName="{{ bookName }}" parentsBookPublisher="{{ publisher }}"></child1>
+	</p>
+
+	<p>
+		<child2 myBook="{{ bookName }}" myPub="{{ publisher }}"></child2>
+	</p>
+
+
+********************************************Child1 Component **************************************
+
+
+####### Child1 (child1.component.ts)
+
+
+   @Input() parentsBookName = '';
+   @Input() parentsBookPublisher = '';
+
+
+
+####### child1.component.html
+
+
+   <p>
+     Book: {{ parentsBookName }}
+   </p>
+   <p>
+     Publisher: {{ parentsBookPublisher }}
+  </p>
+
+
+*******************************************Child2 Component *****************************************
+
+ 2nd option for how to leverage the @Input() decorator.
+ In this case, we can “alias” the data that is passed down from the parent component.
+ We “alias” the data by passing a string to the @Input() decorator.
+ So, instead of @Input() PROPERTY_NAME = “”, we use the following syntax: @Input(PROPERTY_NAME) alt_property_name = “”
+
+
+
+
+############ Child2 (child2.component.ts)
+
+
+  @Input('myBook') book  ='';
+  @Input('myPub') publisher ='';
+
+
+
+#################### child2.component.html
+
+
+  	<p>
+	  Book: {{book }}
+	</p>
+	<p>
+  	  Publisher: {{ publisher }}
+	</p>
+
+

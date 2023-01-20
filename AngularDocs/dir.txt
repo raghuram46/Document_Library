@@ -1,0 +1,135 @@
+******************************************Directives************************
+
+
+****************************************ngFor example************************************
+
+
+  books: any[] = [
+    {
+      "name": "Think and Grow Rich"
+    },
+    {
+      "name": "Acers of Diamond"
+    },
+    {
+      "name": "Atomic Habits"
+    },
+    {
+      "name": "Power of Habit"
+    },
+    {
+      "name": "Option B"
+    }
+  ];
+
+
+<ul>
+  <li *ngFor = "let book of books let i=index">
+    {{ i+1 }} - {{ book.name }}
+  </li>
+</ul>
+
+
+**************************************** ngFor (nested) **************************
+
+ bookByPublisher: any[] = [
+    {
+      'publisher': 'Diamond',
+      'books': [
+        {
+          "name": "Acers of Diamond"
+        },
+        {
+          "name": "Acers of Land"
+        },
+      ]
+    },
+    {
+      'publisher': 'Penguine',
+      'books': [
+        {
+          "name": "Atomic Habits"
+        },
+        {
+          "name": "Power of Habit"
+        }
+        
+      ]
+    },
+    {
+	    'publisher': 'Finger Print',
+	    'books': [
+		    {
+          "name": "Power of Habits"
+        },
+        {
+          "name": "Cook  Tyson"
+        }
+	      ]
+    }
+
+  ];
+
+
+------------HTML-------------------------------
+
+ <ul *ngFor="let group of bookByPublisher"> 
+   <li>{{ group.publisher }}</li>
+   <ul>
+    <li *ngFor="let book of group.books"> 
+      {{ book.name }}
+    </li>
+   </ul>
+ </ul>
+
+
+************************************************ ngIf ***************************************
+
+
+ books: any[] = [
+    {
+      name: "Think and Grow Rich",
+      price: 359
+    },
+    {
+      name: "Acers of Diamond",
+      price: 200
+    },
+    {
+      name: "Atomic Habits",
+      price: 587
+    },
+    {
+      name: "Power of Habit",
+      price: 650
+    },
+    {
+      name: "Option B",
+      price: 350
+    }
+  ];
+
+
+
+<ul *ngFor = "let book of books">
+    <li *ngIf="book.price>500">
+      {{ book.name }}
+    </li>
+</ul>
+
+
+************************************************ ngIf else ***************************************
+
+<ul *ngFor = "let book of books let i=index">
+
+  <li *ngIf = "book.price>500; else elseBlock">
+
+    {{ i+1 }} - {{ book.name }}
+
+  </li>
+
+  
+</ul>
+
+
+<ng-template #elseBlock>Cheap Book </ng-template>

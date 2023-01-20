@@ -1,0 +1,163 @@
+import java.util.Scanner;
+Scanner myObj = new Scanner(System.in);
+String userName = myObj.nextLine();
+
+--> nextLine() method, which is used to read a complete line
+--> nextInt()	Reads a int value from the user
+--> nextDouble()	Reads a double value from the user
+--> nextFloat()	Reads a float value from the user
+--> nextLong()	Reads a long value from the user
+
+import java.time.LocalDateTime; // Import the LocalDateTime class
+import java.time.format.DateTimeFormatter; // Import the DateTimeFormatter class
+
+public class Main {
+  public static void main(String[] args) {
+    LocalDateTime myDateObj = LocalDateTime.now();
+    System.out.println("Before formatting: " + myDateObj);
+    DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+
+    String formattedDate = myDateObj.format(myFormatObj);
+    System.out.println("After formatting: " + formattedDate);
+  }
+}
+
+ArrayList
+-->cars.add("Volvo");
+-->cars.get(0);
+-->cars.set(0, "Opel");
+-->cars.contains("Mazda");
+-->cars.remove(0);
+-->cars.clear();
+-->cars.size();
+
+Sort an ArrayList
+-->Collections.sort(cars); 
+
+How the ArrayList works?
+The ArrayList class has a regular array inside it. When an element is added, it is placed into the array. If the array is not big enough, a new, larger array is created to replace the old one and the old one is removed.
+
+How the LinkedList works?
+The LinkedList stores its items in "containers." The list has a link to the first container and each container has a link to the next container in the list. To add an element to the list, the element is placed into a new container and that container is linked to one of the other containers in the list.
+
+-->Use an ArrayList for storing and accessing data, and LinkedList to manipulate data.
+
+****Java Threads****
+-->Threads allows a program to operate more efficiently by doing multiple things at the same time.
+
+-->Threads can be used to perform complicated tasks in the background without interrupting the main program.
+
+There are two ways to create a thread.
+
+-->It can be created by extending the Thread class and overriding its run() method:
+public class Main extends Thread {
+  public static void main(String[] args) {
+    Main thread = new Main();
+    thread.start();
+    System.out.println("This code is outside of the thread");
+  }
+  public void run() {
+    System.out.println("This code is running in a thread");
+  }
+}
+
+-->Another way to create a thread is to implement the Runnable interface:
+public class Main implements Runnable {
+  public static void main(String[] args) {
+    Main obj = new Main();
+    Thread thread = new Thread(obj);
+    thread.start();
+    System.out.println("This code is outside of the thread");
+  }
+  public void run() {
+    System.out.println("This code is running in a thread");
+  }
+}
+
+-->Concurrency Problems
+Because threads run at the same time as other parts of the program, there is no way to know in which order the code will run. When the threads and main program are reading and writing the same variables, the values are unpredictable. The problems that result from this are called concurrency problems.
+
+-->To avoid concurrency problems, it is best to share as few attributes between threads as possible. If attributes need to be shared, one possible solution is to use the isAlive() method of the thread to check whether the thread has finished running before using any attributes that the thread can change.
+
+********Java File Handling*********
+import java.io.File;  // Import the File class
+
+File myObj = new File("filename.txt"); // Specify the filename
+
+canRead()	Tests whether the file is readable or not
+canWrite()	Tests whether the file is writable or notz
+createNewFile()	Creates an empty file
+delete()	Deletes a file
+exists()	Tests whether the file exists
+getName()	Returns the name of the file
+getAbsolutePath()	Returns the absolute pathname of the file
+length()	Returns the size of the file in bytes
+list()		Returns an array of the files in the directory
+mkdir()		Creates a directory
+
+-->To create a file in a specific directory (requires permission), specify the path of the file and use double backslashes to escape the "\" character (for Windows). On Mac and Linux you can just write the path, like: /Users/name/filename.txt
+
+File myObj = new File("C:\\Users\\MyName\\filename.txt");
+
+-->we use the FileWriter class together with its write() method to write some text to the file we created in the example above. Note that when you are done writing to the file, you should close it with the close() method:
+
+FileWriter myWriter = new FileWriter("filename.txt");
+myWriter.write("Files in Java might be tricky, but it is fun enough!");
+myWriter.close();
+
+-->we use the Scanner class to read the contents of the text file we created in the previous chapter:
+
+import java.io.File;  // Import the File class
+import java.io.FileNotFoundException;  // Import this class to handle errors
+import java.util.Scanner; // Import the Scanner class to read text files
+
+public class ReadFile {
+  public static void main(String[] args) {
+    try {
+      File myObj = new File("filename.txt");
+      Scanner myReader = new Scanner(myObj);
+      while (myReader.hasNextLine()) {
+        String data = myReader.nextLine();
+        System.out.println(data);
+      }
+      myReader.close();
+
+    if (myObj.exists()) {
+      System.out.println("File name: " + myObj.getName());
+      System.out.println("Absolute path: " + myObj.getAbsolutePath());
+      System.out.println("Writeable: " + myObj.canWrite());
+      System.out.println("Readable " + myObj.canRead());
+      System.out.println("File size in bytes " + myObj.length());
+    } else {
+      System.out.println("The file does not exist.");
+    }
+
+    } catch (FileNotFoundException e) {
+      System.out.println("An error occurred.");
+      e.printStackTrace();
+    }
+  }
+}
+
+public class DeleteFile {
+  public static void main(String[] args) { 
+    File myObj = new File("filename.txt"); 
+    if (myObj.delete()) { 
+      System.out.println("Deleted the file: " + myObj.getName());
+    } else {
+      System.out.println("Failed to delete the file.");
+    } 
+  } 
+}
+
+public class DeleteFolder {
+  public static void main(String[] args) { 
+    File myObj = new File("C:\\Users\\MyName\\Test"); 
+    if (myObj.delete()) { 
+      System.out.println("Deleted the folder: " + myObj.getName());
+    } else {
+      System.out.println("Failed to delete the folder.");
+    } 
+  } 
+}
+

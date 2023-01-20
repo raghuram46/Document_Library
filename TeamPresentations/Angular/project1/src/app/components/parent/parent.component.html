@@ -1,0 +1,23 @@
+<h2>Parent</h2>
+<p>
+	<input type = "text" [(ngModel)] ="bookName" placeholder="Book Name Please">
+
+	<input type = "text" [(ngModel)] ="publisher" placeholder="Publisher Name">
+</p>
+
+<h2>Child1</h2>
+<p>
+    <app-child1 parentsBookName="{{ bookName }}" parentsBookPublisher="{{ publisher }}"></app-child1>
+</p>
+
+
+<!-- <h2>Parent</h2>
+
+<h3><strong>Name: </strong>  {{bookName}}</h3>
+<h3><strong>Publisher: </strong>  {{publisher}}</h3> -->
+
+<app-child2
+(bookEvent)="bookEvent($event)"
+(publishEvent)="publishEvent($event)">
+</app-child2>	
+

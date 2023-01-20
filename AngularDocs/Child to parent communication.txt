@@ -1,0 +1,149 @@
+##############Child to parent communication @Output()  #########################################
+
+*************child template (child1.component.html)
+
+	<h2> Child1</h2>
+
+	<input
+	 type="text"
+	(keyup)="onBookChange()"
+	[(ngModel)]="bookName"
+	placeholder="Enter book name here">
+
+	<input
+	 type="text"
+	 (keyup)="onPublisherChange()"
+	 [(ngModel)]="publisher"
+	 placeholder="Enter publisher here">
+
+
+***************Child component (child1.component.ts)
+
+	@Output() bookEvent = new EventEmitter<string>();
+  	@Output() publishEvent = new EventEmitter<string>();
+
+  	bookName: string = "";
+ 	publisher: string = "";
+
+  	onBookChange() {
+    		this.bookEvent.emit(this.bookName);
+  	}
+
+  	onPublisherChange() {
+    		this.publishEvent.emit(this.publisher);
+  	}
+
+
+
+*************************Parent component (app.component.ts)
+
+
+	public bookName = '';
+  	public publisher = '';
+
+  	bookEvent($event: any) {
+    		this.bookName = $event;
+  	}
+
+  	publishEvent($event: any) {
+    		this.publisher = $event;
+  	}
+
+
+*****************************Parent Template (app.component.html)
+
+
+	<h2>Parent</h2>
+
+	<h3><strong>Name: </strong>  {{bookName}}</h3>
+	<h3><strong>Publisher: </strong>  {{publisher}}</h3>
+
+	<child1
+	(bookEvent)="bookEvent($event)"
+	(publishEvent)="publishEvent($event)">
+	</child1>	
+
+
+######################################################################################################################
+######################################################################################################################
+
+	Child to Parent Communication using @ViewChild
+
+********parent component (app.component.ts)*****************
+
+
+
+	@ViewChild(Child1Component)
+  	child1: Child1Component = new Child1Component;
+  	@ViewChild(Child2Component) child2: Child2Component;
+
+  	bookInfo1: any = {
+    		bookName: '',
+    		publisher: ''
+  	};
+
+  	bookInfo2: any = {
+    		bookName: '',
+    		publisher: ''
+  	};
+
+
+  	ngAfterViewInit() {
+   		this.bookInfo1 = this.child1.bookInfo;
+    		this.bookInfo2 = this.child2.bookInfo;
+  	}
+
+
+
+
+***************************parent template (app.component.html)***************
+
+
+
+	<h2>Data From Child 1</h2>
+	
+	<strong>Book Name: </strong>  {{bookInfo1.bookName}}
+	<strong>Publisher: </strong>  {{bookInfo1.publisher}}
+
+	<h2>Data From Child 2</h2>
+	<strong>Book Name: </strong>  {{bookInfo2.bookName}}
+	<strong>Publisher: </strong>  {{bookInfo2.publisher}}
+
+	<child1></child1>
+	<child2></child2>
+
+
+
+**********************Child1 & child2 component (child1/child2.component.ts)************
+
+
+	bookInfo: any = {
+    		bookName: '',
+    		publisher: ''
+  	};
+
+
+****************************child1 & child2 tempalate(child1/child2.component.html************
+
+
+	<p>
+		<label>Book Name</label>
+		<input
+		type="text"
+		[(ngModel)]="bookInfo.bookName"
+		placeholder="Book name please">
+	</p>
+
+	<p>
+		<label>Publisher</label>
+		<input
+		type="text"
+		[(ngModel)]="bookInfo.publisher"
+		placeholder="Publisher name">
+	</p>
+
+
+*********************************************************************************************
+
+
+

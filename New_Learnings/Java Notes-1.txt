@@ -1,0 +1,138 @@
+In Java, there are two types of casting:
+
+Widening Casting (automatically) - converting a smaller type to a larger type size
+byte -> short -> char -> int -> long -> float -> double
+
+Narrowing Casting (manually) - converting a larger type to a smaller size type
+double -> float -> long -> int -> char -> short -> byte
+
+Widening Casting
+Widening casting is done automatically when passing a smaller size type to a larger size type:
+
+public class Main {
+  public static void main(String[] args) {
+    int myInt = 9;
+    double myDouble = myInt; // Automatic casting: int to double
+
+    System.out.println(myInt);      // Outputs 9
+    System.out.println(myDouble);   // Outputs 9.0
+  }
+}
+
+Narrowing Casting
+Narrowing casting must be done manually by placing the type in parentheses in front of the value:
+
+public class Main {
+  public static void main(String[] args) {
+    double myDouble = 9.78d;
+    int myInt = (int) myDouble; // Manual casting: double to int
+
+    System.out.println(myDouble);   // Outputs 9.78
+    System.out.println(myInt);      // Outputs 9
+  }
+}
+
+Java Strings
+
+--> txt.length()
+--> txt.toUpperCase()
+--> txt.toLowerCase()
+--> txt.indexOf("locate")
+--> myStr.indexOf("e", 5)
+--> myStr.lastIndexOf("planet")
+--> myStr1.compareTo(myStr2)
+--> myStr1.compareToIgnoreCase(myStr2)
+--> firstName.concat(lastName)
+--> myStr.contains("Hel")
+--> myStr.contentEquals("Hello")
+--> myStr2.copyValueOf(myStr1, 0, 5)
+--> myStr.endsWith("Hel")
+--> myStr.startsWith("Hel")
+--> myStr1.equalsIgnoreCase(myStr2)
+--> myStr1.isEmpty()
+--> Str.matches("(.*)Tutorials(.*)")
+--> myStr.replace('l', 'p')
+--> str1.replaceFirst("aa", "zz")
+--> s1.replaceAll("a","e")
+--> str.split(":")
+--> Str.subSequence(0, 7)
+--> text.slice(0, 5)
+--> string.substring(start, end)
+--> string.substr(start, length)
+--> s.toCharArray()
+--> string.toString()
+--> myStr.trim()
+
+
+
+String txt = "Please locate where 'locate' occurs!";
+System.out.println(txt.indexOf("locate")); // Outputs 7
+
+String myStr1 = "Hello";
+String myStr2 = "Hello";
+System.out.println(myStr1.compareTo(myStr2)); // Returns 0 because they are equal
+
+char[] myStr1 = {'H', 'e', 'l', 'l', 'o'};
+String myStr2 = "";
+myStr2 = myStr2.copyValueOf(myStr1, 0, 5);
+System.out.println("Returned String: " + myStr2);
+
+public class StringGetCharsExample{  
+public static void main(String args[]){  
+ String str = new String("hello javatpoint how r u");  
+      char[] ch = new char[10];  
+      try{  
+         str.getChars(6, 16, ch, 0);  
+         System.out.println(ch);  
+      }catch(Exception ex){System.out.println(ex);}  
+}
+
+class Gfg {
+    public static void main(String args[])
+    {
+        String s = "GeeksforGeeks";
+        char[] gfg = s.toCharArray();
+        for (int i = 0; i < gfg.length; i++) {
+            System.out.println(gfg[i]);
+        }
+    }
+}
+
+public static void main(String[] args) {
+      String str1 = "aabbaaac";
+      String str2 = "Learn223Java55@";
+
+      // regex for sequence of digits
+      String regex = "\\d+";
+
+      // the first occurrence of "aa" is replaced with "zz"
+      System.out.println(str1.replaceFirst("aa", "zz")); // zzbbaaac
+
+      // replace the first sequence of digits with a whitespace
+      System.out.println(str2.replaceFirst(regex, " ")); // Learn Java55@
+}
+
+public static void main(String args[])
+    {
+        String str = "Geeks.for.Geeks";
+        String[] arrOfStr = str.split("[.]");   // str.split("."); will give no output...
+
+	String str = "word1, word2 word3@word4?word5.word6";
+        String[] arrOfStr = str.split("[, ?.@]+");
+  
+        for (String a : arrOfStr)
+            System.out.println(a);
+    }
+
+
+Math Methods(all are static)
+
+--> Math.ceil(x)
+--> Math.floor(x)
+--> Math.max(x, y)
+--> Math.min(x, y)
+--> Math.pow(x, y)
+--> Math.random()
+--> Math.round(x)
+--> Math.sqrt(x)
+--> Math.abs(x)

@@ -1,0 +1,30 @@
+pom.xml:::
+Sonar-maven plugin ::
+--------------------
+
+	<properties>
+		<maven.compiler.source>1.8</maven.compiler.source>
+    		<maven.compiler.target>1.8</maven.compiler.target>
+		<sonar.sources>src/main</sonar.sources>
+		<sonar.tests>src/test</sonar.tests>
+		<!-- Optional URL to server. Default value is http://localhost:9000 -->
+		<sonar.host.url>
+			http://localhost:9000
+		</sonar.host.url>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.sonarsource.scanner.maven</groupId>
+				<artifactId>sonar-maven-plugin</artifactId>
+				<version>3.2</version>
+			</plugin>
+		</plugins>
+	</build>
+Command to connect our project with sonar:
+------------------------------------------
+> mvn sonar:sonar for SonarQube version  7.3
+
+>mvn sonar:sonar –Dsonar.login=username -Dsonar.password=password (for latest version)
+     

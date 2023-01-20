@@ -1,0 +1,14 @@
+-->IndexOutOfBoundsException - if index is negative or not less than the length of the specified string
+
+-->StringIndexOutOfBoundsException - if offset is negative or out of reach, or if count is greater than the length of the char array, or negative
+
+-->NullPointerException - if the returned value is null
+
+-->PatternSyntaxException when there is an improper regular expression.
+
+-->If you enter wrong input (e.g. text in a numerical input), you will get an exception/error message (like "InputMismatchException").
+
+-->IOException occurs (if the file cannot be created for some reason):
+
+-->ArithmeticException, FileNotFoundException, SecurityException, etc:
+

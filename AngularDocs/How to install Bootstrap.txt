@@ -1,0 +1,11 @@
+
+
+npm install bootstrap --save
+
+
+
+Open the angular.json file of your project and include:
+
+./node_modules/bootstrap/dist/css/bootstrap.css in the projects->architect->build->styles array,
+./node_modules/bootstrap/dist/js/bootstrap.js in the projects->architect->build->scripts array,
+node_modules/bootstrap/dist/js/bootstrap.js in the projects->architect->build->scripts array,

@@ -1,0 +1,10 @@
+sudo -i               ---> Entry into online VM
+
+yum install java 1.8.0-openjdk                  ---> to install java in VM
+
+
+ alternatives --config java                  ----> to set the java path
+
+wget <s3Object>                              -----> to get jar file into our vm
+
+java -jar <filename>.jar                  ----> to run java filein VM

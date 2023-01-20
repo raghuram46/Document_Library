@@ -1,0 +1,16 @@
+.heading{
+    color: blueviolet;
+}
+
+.text-success{
+    color: green;
+  }
+  .text-primary{
+    color: aqua;
+  }
+  .text-danger{
+    color: purple;
+  }
+  .text-warning{
+    color: red;
+  }

@@ -1,0 +1,6 @@
+CMD > java -jar jenkins.war
+
+CMD > java -jar jenkins.war --httpPort=8081
+
+
+exec:java -Dexec.mainClass="com.main.FirstJava"

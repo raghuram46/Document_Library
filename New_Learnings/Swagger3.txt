@@ -1,0 +1,19 @@
+Spring Boot Swagger 3 (OpenAPI 3)
+----------------------------------
+
+- OpenAPI Specification (formerly Swagger Specification) is an API description format   for REST APIs. 
+- OpenAPI Specification that can help you design, build, document and consume REST   APIs.
+- The Swagger Specification, has been donated to the Open API Initiative (or OAI)   which is a Linux Foundation Collaborative Project.
+
+Step 1 : pom.xml
+    
+   <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui -->
+    <dependency>
+        <groupId>org.springdoc</groupId>
+         <artifactId>springdoc-openapi-ui</artifactId>
+         <version>1.5.13</version>
+    </dependency>
+
+Step 2 :Start the project. If we now go to localhost:8080/swagger-ui.html
+
+http://localhost:9090/swagger-ui.html

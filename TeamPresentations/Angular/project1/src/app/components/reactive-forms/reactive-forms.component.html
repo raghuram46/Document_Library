@@ -1,0 +1,61 @@
+<div class="container">
+    <span><h2>{{ title }}</h2></span>
+
+    <div class="form">
+        <form [formGroup]="bookForm" (ngSubmit)="onSubmit()">
+            <p>
+                <label for="bookName">Book Name</label>
+                <input type="text" id="bookName" name="bookName" formControlName="bookName">
+            </p>
+
+            <p>
+                <label for="authorName">Author</label>
+                <input type="text" id="authorName" name="authorName" formControlName="authorName">
+            </p>
+
+            <p>
+                <label for="bookPrice">Price </label>
+                <input type="text" id="bookPrice" name="bookPrice" formControlName="bookPrice">
+            </p>
+
+            <p>
+                <label for="publisher">Publisher </label>
+                <input type="text" id="publisher" name="publisher" formControlName="publisher">
+            </p>
+
+            <p>
+                <label for="genre">Genre</label>
+                <input type="radio" value="fiction" id="genre" name="genre" formControlName="genre"> Fiction
+                <input type="radio" value="science" id="genre" name="genre" formControlName="genre"> Science
+                <input type="radio" value="novel" id="genre" name="genre" formControlName="genre"> Novel
+                <input type="radio" value="self help" id="genre" name="genre" formControlName="genre"> Sefl Help
+                <input type="radio" value="autobiography" id="genre" name="genre" formControlName="genre"> Autobiography
+                <input type="radio" value="technology" id="genre" name="genre" formControlName="genre"> Technology
+            </p>
+
+            <div formGroupName = "publisher_contact">
+ 
+                <p>
+                  <label for="city">City</label>
+                  <input type="text" name="city" formControlName="city">
+                </p>
+             
+                <p>
+                  <label for="phone">Phone</label>
+                  <input type="text" name="phone" formControlName="phone">
+                </p>
+                <p>
+                  <label for="email">email</label>
+                  <input type="text" name="email" formControlName="email">
+                </p>
+             
+            </div>
+            
+            <p>
+                <button type="submit" [disabled]="!bookForm.valid">Submit</button>
+            </p>
+
+        </form>
+    </div>
+</div>
+

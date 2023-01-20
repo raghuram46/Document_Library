@@ -1,0 +1,498 @@
+step - 1:
+
+ --> Download the zookeeper and kafka zip files
+
+	     ----------------------------------------------------------------------------------------------------------
+	---> | zookeeper  | http://mirrors.estointernet.in/apache/zookeeper/stable/  | apache-zookeeper-3.6.3.tar.gz  |
+	     ----------------------------------------------------------------------------------------------------------
+	---> | kafka      | http://mirrors.estointernet.in/apache/kafka              | kafka-2.12-3.2.0.tgz           |
+	     ----------------------------------------------------------------------------------------------------------
+
+step - 2:
+
+ --> extract the zookeeper and kafka zipfiles 
+ --> give simple path to these files for run easily  like  --- C:\kafka_2.12-3.2.0
+ --> create one folder with name "data" in kafka_2.12-3.2.0
+ --> create one folder with name "zookeeper" in kafka_2.12-3.2.0/data
+ --> create another folder with name "broker" in kafka_2.12-3.2.0/data
+
+
+step - 3:
+ --> make sure that you have java software in your system
+ --> in environment variables\system-variables you must have JAVA_HOME
+ --> in environment variables\system-variables 
+	--> select path and click on edit option 
+	--> in path add apache-zookeeper-3.6.3 with bin folder like  C:\apache-zookeeper-3.6.3\bin
+
+step - 4: 
+
+ server files are in config folder but we need those files in kafka_2.12-3.2.0\bin\windows folder beacuse we are using windows os
+ --> in C:\kafka_2.12-3.2.0\config path it has the zookeeper.properties and server.properties files copy and paste in C:\kafka_2.12-3.2.0\bin\windows
+
+ edit the file which is in path apache-zookeeper-3.6.3\bin
+--> zkServer.cmd file 
+	add :
+	   tickTime=2000 
+           initLimit=10 
+	   syncLimit=5 
+	   dataDir=C:/apache-zookeeper-3.6.3-bin/data
+	   -Dzookeeper.audit.enable=true
+
+  edit the file which is in path apache-zookeeper-3.6.3\bin\conf
+  --> zoo_sample.cnf 
+	add :
+	   audit.enable=true
+step - 5:
+ --> run the zookeeper  
+    --> open command promt in C:\kafka_2.12-3.2.0\bin\windows
+    --> type the command 
+	zookeeper-server-start.bat zookeeper.properties
+ --> run the kafka  
+   --> open another command promt in C:\kafka_2.12-3.2.0\bin\windows
+   --> type the command 
+	kafka-server-start.bat server.properties
+ --> #if you got zookeeper audit is disables in zookeeper command promt re run the zookeeper command line
+
+step - 6:
+     kafka has topics , topics contains the messages
+ --> to create the topic open another command promt in C:\kafka_2.12-3.2.0\bin\windows
+ --> type kafka-topics.bat --create --topic quickstart-events --bootstrap-server localhost:9092
+ --> to see what are the topics are there in kafka type the 
+	kafka-topics.bat --bootstrap-server localhost:9092 --list
+step - 7:
+ --> To send massages to topic which is in kafka server by using command line
+	kafka-console-producer.bat --broker-list localhost:9092 --topic <topic-name>
+   after writing the message press control+c
+   it will ask like: terminate batch job(Y/N): y (give input y) it is an option to terminate the batch
+   
+ --> To see the massages from topic by using command line
+	kafka-console-consumer.bat --bootstrap-server localhost:9092 —topic <topic-name> --from-beginning
+	
+step - 8:
+	generate message and push to kafka using java
+	
+
+************************* spring boot producer code***********************************
+------Controller--------
+
+package com.stg.controller;
+
+
+import java.util.ArrayList;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.stg.model.User;
+import com.stg.service.producerService;
+
+@RestController
+@RequestMapping("kafka")
+public class ControllerOne {
+	
+	
+	
+	@Autowired
+	private producerService producerService;
+
+    @GetMapping("/publish")
+    public List<User> getAll() {
+    	
+        User user1 = new User("sai", "Technology", 12000L);
+        User user2 = new User("saikrishna", "Technology", 19000L);
+        User user3 = new User("saigopal", "Technology", 62000L);
+        List<User> userList = new ArrayList<>();
+        userList.add(user1);
+        userList.add(user2);
+        userList.add(user3);
+
+        return userList;
+    }
+	
+	
+    @PostMapping(value = "/addUser" ) 
+    public String addUser(@RequestBody List<User> users) {
+//    	User c = new User("kiran", "Tech", 1200L);
+    	return producerService.add(users);
+    }
+    
+    
+
+}
+
+
+--------config --------------- 
+package com.stg.config;
+
+
+import org.apache.kafka.clients.producer.ProducerConfig;
+import org.apache.kafka.common.serialization.StringSerializer;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.kafka.core.DefaultKafkaProducerFactory;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.core.ProducerFactory;
+import org.springframework.kafka.support.serializer.JsonSerializer;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import com.stg.model.User;
+import com.stg.util.kafkaUtil;
+
+
+@Configuration
+public class KafkaProducerConfig {
+	
+	  @Bean
+	    public ProducerFactory<String, User> producerFactory() {
+	        Map<String, Object> config = new HashMap<String, Object>();
+
+	        config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaUtil.HOST);
+	        config.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+	        config.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
+	        config.put(JsonSerializer.ADD_TYPE_INFO_HEADERS, false);
+	        config.put(JsonSerializer.TYPE_MAPPINGS, "user:com.stg.model.User");
+	        return new DefaultKafkaProducerFactory<>(config);
+	    }
+
+
+	    @Bean(name="kafkaTemplate")
+	    public KafkaTemplate<String, User> kafkaTemplate() {
+	        return new KafkaTemplate<>(producerFactory());
+	    }
+	    
+	   
+
+}
+
+
+------------ service ----------
+package com.stg.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.stereotype.Service;
+
+import com.stg.model.User;
+import com.stg.util.kafkaUtil;
+
+@Service
+public class producerService {
+
+	@Autowired
+	private KafkaTemplate<String, User> kafkaTemplate;
+	/**
+	 * this method is used to publish customer records as msgs to kafka topic
+	 * 
+	 * @param User
+	 * @return
+	 * 
+	 */
+	
+	public String add(List<User> users) {
+		
+		if(!users.isEmpty()) {
+			for (User user : users) {
+				
+				kafkaTemplate.send(kafkaUtil.TOPIC, user);
+				System.out.println("---- Massage published to kafka topic-----");
+			}
+		}
+		
+		return "user Record Added To Kafka Queue Successfully";
+	}
+}
+
+------- model/entity ---------------
+package com.stg.model;
+
+public class User {
+	private String name;
+    private String dept;
+    private Long salary;
+
+    public User(String name, String dept, Long salary) {
+        this.name = name;
+        this.dept = dept;
+        this.salary = salary;
+    }
+
+   
+
+	public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDept() {
+        return dept;
+    }
+
+    public void setDept(String dept) {
+        this.dept = dept;
+    }
+
+    public Long getSalary() {
+        return salary;
+    }
+
+    public void setSalary(Long salary) {
+        this.salary = salary;
+    }
+
+}
+
+------- util package ---------------
+
+package com.stg.util;
+
+public class kafkaUtil {
+	
+	public static final String TOPIC = "test";
+	public static final String GROUP_ID = "group_one";
+	public static final String HOST = "localhost:9092";
+
+}
+
+-------- application.properties -----------------
+server.port=9090
+spring.kafka.producer.key-serializer: org.apache.kafka.common.serialization.StringSerializer
+spring.kafka.producer.value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+-------- pom.xml dependecy------------ 
+
+dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.kafka</groupId>
+			<artifactId>spring-kafka</artifactId>
+		</dependency>
+<dependency>
+    <groupId>org.apache.kafka</groupId>
+    <artifactId>kafka-streams</artifactId>
+    
+</dependency>
+<dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-databind</artifactId>
+  
+</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+
+
+**************************** consumer spring boot java code ********************************
+
+-------------- config package -------------- 
+package com.example.config;
+import java.util.HashMap;
+import java.util.Map; 
+
+import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.apache.kafka.common.serialization.StringDeserializer;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.kafka.annotation.EnableKafka;
+import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
+import org.springframework.kafka.core.ConsumerFactory;
+import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
+import org.springframework.kafka.support.serializer.ErrorHandlingDeserializer;
+import org.springframework.kafka.support.serializer.JsonDeserializer;
+
+import com.example.model.User;
+import com.example.util.kafkaUtil;
+
+@EnableKafka
+@Configuration
+public class KafkaConsumerConfig {
+	
+	 @Bean
+	   public ConsumerFactory<String, User> consumerFactory() {
+	      Map<String, Object> props = new HashMap<>();
+	      props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaUtil.HOST);
+	      props.put(ConsumerConfig.GROUP_ID_CONFIG, kafkaUtil.GROUP_ID);
+	      props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+	      props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
+//	      props.put(JsonSerializer.TYPE_MAPPINGS, User.class);
+//	      props.put(JsonDeserializer.VALUE_DEFAULT_TYPE, User.class);
+	      props.put(JsonDeserializer.VALUE_DEFAULT_TYPE, "com.example.model.User");
+	      props.put(ErrorHandlingDeserializer.KEY_DESERIALIZER_CLASS, StringDeserializer.class);
+	      props.put(ErrorHandlingDeserializer.VALUE_DESERIALIZER_CLASS, JsonDeserializer.class);
+	      return new DefaultKafkaConsumerFactory<>(props, new StringDeserializer(), new JsonDeserializer<>(User.class));
+	      
+	    		  
+	   }
+	   @Bean
+	   public ConcurrentKafkaListenerContainerFactory<String, User> kafkaListenerContainerFactory() {
+	      ConcurrentKafkaListenerContainerFactory<String, User> 
+	      factory = new ConcurrentKafkaListenerContainerFactory<>();
+	      factory.setConsumerFactory(consumerFactory());
+	      return factory;
+	   }
+
+}
+
+
+--------------- model/entity ---------------
+
+package com.example.model;
+
+public class User {
+	private String name;
+    private String dept;
+    private Long salary;
+
+    public User(String name, String dept, Long salary) {
+        this.name = name;
+        this.dept = dept;
+        this.salary = salary;
+    }
+    public User() {
+		super();
+	}
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDept() {
+        return dept;
+    }
+
+    public void setDept(String dept) {
+        this.dept = dept;
+    }
+
+    
+
+	public Long getSalary() {
+        return salary;
+    }
+
+    public void setSalary(Long salary) {
+        this.salary = salary;
+    }
+
+	@Override
+	public String toString() {
+		return "User [name=" + name + ", dept=" + dept + ", salary=" + salary + "]";
+	}
+
+}
+
+
+-------------- service ---------------
+package com.example.service;
+
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.stereotype.Service;
+import com.example.model.User;
+import com.example.util.kafkaUtil;
+
+
+@Service
+public class KafkaConsumerService {
+	
+	
+	@KafkaListener(topics = kafkaUtil.TOPIC, groupId = kafkaUtil.GROUP_ID)
+	public User  listener(User c) {
+		
+		System.out.println("---- Massage received from kafka Topic :: " + c);
+		
+//		System.out.println("name :"+c.getName());
+//		System.out.println("department :"+c.getDept());
+//		System.out.println("salary :"+c.getSalary());
+		
+		return c;
+	}
+
+}
+
+
+
+--------------- util package ---------------
+
+package com.example.util;
+
+public class kafkaUtil {
+	
+	public static final String TOPIC = "test";
+	public static final String GROUP_ID = "group_one";
+	public static final String HOST = "localhost:9092";
+
+}
+
+
+------------ application.properties --------------
+
+server.port=9091
+spring.kafka.consumer.key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+spring.kafka.consumer.value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+spring.kafka.consumer.properties.spring.json.trusted.packages=*
+
+
+-------------- pom.xml dependency ------------ 
+
+<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.kafka</groupId>
+			<artifactId>kafka-streams</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.kafka</groupId>
+			<artifactId>spring-kafka</artifactId>
+		</dependency>
+<dependency>
+	  <groupId>log4j</groupId>
+	  <artifactId>log4j</artifactId>
+	  <version>1.2.17</version>
+	</dependency>
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-log4j2</artifactId>
+</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.kafka</groupId>
+			<artifactId>spring-kafka-test</artifactId>
+			<scope>test</scope>
+		</dependency>

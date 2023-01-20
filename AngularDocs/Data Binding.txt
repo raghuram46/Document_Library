@@ -1,0 +1,72 @@
+**************************Interpolation****************************
+
+###component.ts
+
+	title = 'Hello World';
+
+###component.html
+
+	{{ title }}
+
+
+
+*******************************Property Binding****************
+
+###component.ts
+
+
+	clickme = true;
+
+	constructor(){
+    		setTimeout(() =>{
+      		this.clickme = false;
+    		}, 5000);
+  	}
+
+###component.html
+
+	<button class="btn btn-primary"
+		[disabled]="clickme">Property Binding</button>
+
+
+****************************Event Binding***********************
+
+###component.ts
+
+	constructor(){
+    		setTimeout(() =>{
+      		this.clickme = false;
+    		}, 5000);
+  	}
+
+changeTitle(){
+    this.title="Pat Cash"
+  }
+
+###component.html
+
+	<button class="btn btn-primary"
+		[disabled]="clickme"
+		(click)="changeTitle()">Property Binding</button>
+
+
+
+***************************2 way Binding*****************
+
+###component.ts
+
+	name = 'Hello World';
+
+###component.html
+
+	<input type = "text" [(ngModel)] = "name"><br><br>
+
+	{{ name }}<br><br>
+
+
+####### ngModel
+
+	ngModel is a directive which binds input, select and 	textarea, and stores the required user value in a variable 	and we can use that variable whenever we require that 	value.
+
+
+

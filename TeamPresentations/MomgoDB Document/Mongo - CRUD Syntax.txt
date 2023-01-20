@@ -1,0 +1,111 @@
+SHOW 
+
+
+--------------------------------------------------
+POST
+
+db.empDetails.insertOne(
+	{
+		First_Name: "Ram",
+		Last_Name: "kumar",
+		Age:"27",
+		Date_Of_Birth: "1995-09-26",
+		e_mail: "ramkumar@gmail.com",
+		phone: "9848022338"
+	})
+
+
+db.empDetails.insertMany(
+	[
+		{
+			First_Name: "Ajith",
+			Last_Name: "aji",
+			Date_Of_Birth: "1995-09-26",
+			Age:"27",
+			e_mail: "aji.123@gmail.com",
+			phone: "9000012345"
+		},
+		{
+			First_Name: "Rachel",
+			Last_Name: "Christopher",
+			Age:"25",
+			Date_Of_Birth: "1990-02-16",
+			e_mail: "Christopher.123@gmail.com",
+			phone: "9000054321"
+		},
+		{
+			First_Name: "bala",
+			Last_Name: "kumar",
+			Date_Of_Birth: "1990-02-16",
+			Age:"35",
+			e_mail: "kumar.123@gmail.com",
+			phone: "9000054321"
+		},
+{
+			First_Name: "john",
+			Last_Name: "caeser",
+			Date_Of_Birth: "1990-02-16",
+			Age:"29",
+			e_mail: "john123@gmail.com",
+			phone: "9000054321"
+		}
+	]
+)
+
+---------------------------
+
+GET
+
+db.name.find().pretty()
+
+db.name.findOne({"name":"name"})
+----------------------
+
+PUT
+
+>>>>>>>>>>>>>>>>>db.name.updateone({<FILTER CRITERIA>},{$ set :{<UPDATE>}})
+
+
+
+db.name.updateone({"variableName":""},{$ set :{"mobile":"13"}})
+
+db.name.updatemany({age:{$gt:"12"}},{$set:{"age":"15"}})
+
+-----------------------
+DELETE
+
+db.collectionname.deleteOne({"First_Name":"john"})
+
+db.collectionname.deleteMany({})
+
+db.collectionname.remove({}) - will delete whole document
+
+
+-----------------------------------------------------------------
+
+Json format to post the data - Embedded Document (Relationship)
+{
+    "id":10,
+    "name":"jack",
+    "gender":"male",
+    "products":[{
+        "prodName":"camlin",
+        "quantity":"15",
+        "price":"120"
+    },
+    {
+        "prodName":"camel",
+        "quantity":"52",
+        "price":"2050"
+    }
+    ],
+    "address":{
+"city":"MAA",
+"state":"TN",
+"pincode":"900001"
+    }
+   
+
+}
+
+
