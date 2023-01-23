@@ -1,0 +1,34 @@
+-> Share your experience in the previous projects
+
+-> How can you join two tables in MySQL and what are the joins you have used?
+
+-> How to create or generate tables in MySQL?
+
+-> Suppose you have a employee table(empName, wages, date) then how can you get each employee wages in a particular month?
+
+-> Suppose you have a bulk data of employees in the database and while retrieving you might get the out of memory error and how can you optimise it?
+
+-> What are the collections you have worked on?
+
+-> How can you sort the list of objects?
+
+-> What is the difference between comparable and comparator and where do you use them?
+
+-> Difference between synchronization and non-synchronization?
+
+-> You have list of strings. How can you concatinate all the strings in a optimal way?
+
+-> Do you have any idea about plsql?
+
+-> How do you convert mainFrame project to spring boot project and what are the requirements?
+
+-> What are the requirements to develop a spring boot project?
+
+-> How do you deploy your project?
+
+-> What are the plugins used to deploy the project?
+
+-> How do maven generate jar or war file ?
+
+-> How do you customize your pom.xml file to generate jar or war file?
+

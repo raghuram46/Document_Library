@@ -1,0 +1,21 @@
+Ford interview questions 
+
+1.	Self-introduction
+2.	What is static and final keywords. What is the use of them
+3.	What is dependency injection
+4.	Difference between linked List and Array List
+5.	If we give final keyword to  list, can we modify the list 
+6.	Stater dependencies in spring
+7.	What is Auto configuration 
+8.	 What is controller and Rest controller, difference between them
+9.	Java 8 features 
+10.	What are streams 
+11.	Write code using streams for print the employee name who’s salary is greater than 10.     in the employee list
+12.	Write a query to get 2nd highest salary of an employee
+13.	Where you mention the properties of your application 
+14.	How you configure your database in configuration file 
+15.	Angular 8 features 
+16.	Updated version of angular 
+17.	What is micro service and how to use
+18.	What is lambda expression 
+

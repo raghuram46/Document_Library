@@ -1,0 +1,18 @@
+1.  Semantic monitoring in microservices. 
+2. how to achieve Distributed Transactions.
+3. end to end testing in microservices. 
+4. How will you handle if multiple services fail. 
+5. How will you achieve multiple external Api call.
+6. How to connect multiple Database in spring boot. 
+7. Explain Blue Green deployment technique.
+8. Dump pipes. 
+9. Explain CICD pipelines 
+10.  JWT Implementation 
+11. Many to Many mapping 
+12. How will you write test cases for your controller. 
+13. Exception Handling in spring boot 
+14. In which scenario Native Query is essential 
+15. How will you write pipeline  scripts in Jenkins. 
+16. How will you merge your sub branch with master branch using github. 
+17. What is Agile methodology. 
+18. Self Introduction. 

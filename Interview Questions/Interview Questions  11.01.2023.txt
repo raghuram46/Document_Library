@@ -1,0 +1,46 @@
+-->Self Intro
+
+-->What are the Java8 features?
+
+-->How do you use lamda functions?
+
+-->What is Optional Class?
+
+-->What is the difference between collections and streams?
+
+-->What are the intermediate operations in streams?
+
+-->What is the drawback of streams over collections?
+
+-->How do you access streams with index based and position based?
+
+-->How do you save data in two tables at a time springboot?
+
+-->what annotation you have used to define primary key?
+
+-->How do you annotate for foreign key?
+
+-->What is TDD?
+
+-->What are the standards followed in testing?
+
+-->How do use @Mock, @InjectMocks?
+
+-->How do you test different layers of your application?
+
+-->How do you test your code locally?
+
+-->Have you worked on swagger?
+
+-->What is pair programming?
+
+-->If you are a navigator, will you accept suggestions from the driver?
+
+-->What are stereotype annotations?
+
+-->Difference between @controller and @RestController?
+
+-->What is @SpringBootApplication?
+
+-->Explain DI and IOC
+

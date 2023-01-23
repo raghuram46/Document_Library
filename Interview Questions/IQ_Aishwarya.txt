@@ -1,0 +1,16 @@
+10/1/2023
+
+1.Java 8 Features 
+2.Java Memory Management
+3.What is Dispatcher servlet
+4. serialization and deserialization 
+5.What is your Last Project ,Roles and Responsibility in your last Project
+6.Which server you used for backend in deployment, which server for front-end
+7.How do you migrate and maintains you code 
+8. What is Difference between Configration and Enable Autoconfiguration
+10.What is String Constant Pool
+11.What are database languages you know
+12.What are comments you used for Crud operation in sql
+13.What is TDD
+14. What is IOC
+15. @SpringBootApplication
